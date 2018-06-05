@@ -241,12 +241,18 @@ def set() {
 def api(method, args = [], success = {}) {
   def methods = [
     "decoder_control": [uri: "http://${ip}:${port}/decoder_control.cgi${login()}&${args}", type: "post"],
-    "snapshot":        [uri: "http://${ip}:${port}/snapshot.cgi${login()}&${args}",        type: "post"],
+    "snapshot":        [uri: "http://${ip}:${port}/cgi-bin/api.cfg?cmd=Snap&channel=0&rs=123456&user=${username}&password=${password}", type: "post"],
+   
+    // "snapshot":        [uri: "http://${ip}:${port}/snapshot.cgi${login()}&${args}",        type: "post"],
+   //  http://​(ip address)​/cgi-bin/api.cgi?cmd=Snap&channel=0&rs=​(any combination of
+   //numbers and letters)​&user=​(user name)​&password=​(user password)
+
     "set_alarm":       [uri: "http://${ip}:${port}/set_alarm.cgi${login()}&${args}",       type: "post"],
     "reboot":          [uri: "http://${ip}:${port}/reboot.cgi${login()}&${args}",          type: "post"],
     "camera_control":  [uri: "http://${ip}:${port}/camera_control.cgi${login()}&${args}",  type: "post"],
     "get_params":      [uri: "http://${ip}:${port}/get_params.cgi${login()}",              type: "get"],
-    "videostream":     [uri: "http://${ip}:${port}/videostream.cgi${login()}",             type: "get"]
+    //"videostream":     [uri: "http://${ip}:${port}/videostream.cgi${login()}",             type: "get"]
+    "videostream": [uri: "rtsp://${username}:${password}@${ip}:${port}//h264Preview_01_main", type: "get"]
   ]
 
   def request = methods.getAt(method)
